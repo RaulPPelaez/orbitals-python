@@ -6,4 +6,8 @@ dependencies:
   - numpy
   - pytest
   - pip
+  - setuptools
   - matplotlib
+  - sphinx
+  - pip:
+      - sphinx-rtd-theme

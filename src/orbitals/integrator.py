@@ -1,25 +1,59 @@
+"""Numerical integrators for ordinary differential equations."""
+
 from abc import ABC, abstractmethod
+from typing import Callable, Sequence
 
 
 class Integrator(ABC):
-    def __init__(self, equation, dt):
+    """Base class for one-step ODE integrators.
+
+    :param equation: Differential equation callable.
+    :param dt: Integration time step.
+    """
+
+    def __init__(
+        self,
+        equation: Callable[[float, Sequence[float]], Sequence[float]],
+        dt: float,
+    ) -> None:
         self.equation = equation
         self.dt = dt
 
     @abstractmethod
-    def step(self, t, state):
-        pass
+    def step(self, t: float, state: Sequence[float]) -> tuple[float, list[float]]:
+        """Advance one integration step.
+
+        :param t: Current simulation time.
+        :param state: Current state vector.
+        :return: Tuple ``(new_t, new_state)``.
+        """
 
 
 class EulerIntegrator(Integrator):
-    def step(self, t, state):
+    """Forward Euler integrator."""
+
+    def step(self, t: float, state: Sequence[float]) -> tuple[float, list[float]]:
+        """Compute one Euler step.
+
+        :param t: Current simulation time.
+        :param state: Current state vector.
+        :return: Tuple ``(t + dt, updated_state)``.
+        """
         derivatives = self.equation(t, state)
         new_state = [s + ds * self.dt for s, ds in zip(state, derivatives)]
         return t + self.dt, new_state
 
 
 class RK4Integrator(Integrator):
-    def step(self, t, state):
+    """Classical fourth-order Runge-Kutta integrator."""
+
+    def step(self, t: float, state: Sequence[float]) -> tuple[float, list[float]]:
+        """Compute one RK4 step.
+
+        :param t: Current simulation time.
+        :param state: Current state vector.
+        :return: Tuple ``(t + dt, updated_state)``.
+        """
         f = self.equation
         dt = self.dt
         k1 = f(t, state)

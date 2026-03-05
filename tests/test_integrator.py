@@ -1,8 +1,10 @@
+"""Tests for integrator implementations."""
+
 from orbitals import EulerIntegrator
 
 
-def test_euler():
-    # Check Euler by integrating f=5*x
+def test_euler() -> None:
+    """Check Euler integration for ``dx/dt = a*x`` over one step."""
     factor = 5.0
     initial = 1.0
     dt = 0.01
