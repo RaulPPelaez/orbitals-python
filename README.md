@@ -30,3 +30,8 @@ pytest -v
 ## Usage
 
 An usage example notebook is provided under `examples/`.
+
+## Contributors
+
+- Raul
+
