@@ -32,7 +32,8 @@ pytest -v
 An usage example notebook is provided under `examples/`.
 
 
-## Contrbutors
+## Contributors
 
 
 -sophia 
+- Álvaro
